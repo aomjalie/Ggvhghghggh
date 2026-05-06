@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enzo Store - จำหน่ายเปียกแมวและของแมวๆ</title>
+    <!-- นำเข้าฟอนต์ Mali เพื่อความน่ารักเหมือนลายมือ -->
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* โทนสี ม่วง ฟ้า ชมพู (พาสเทล) */
+            --color-pink-light: #FFE2E2;
+            --color-pink-main: #FFB6C1;
+            --color-pink-dark: #D14D72;
+            
+            --color-purple-light: #F3E8FF;
+            --color-purple-main: #D8B4E2;
+            --color-purple-dark: #6A1B9A;
+            
+            --color-blue-light: #E0F7FA;
+            --color-blue-main: #B2EBF2;
+            
+            --color-text-main: #333333;
+            --color-text-muted: #666666;
+            --color-bg-paper: #ffffff;
+            --color-grid-line: #f0f0f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Mali', cursive, sans-serif;
+            color: var(--color-text-main);
+            /* พื้นหลังลวดลายน่ารักๆ รอยเท้าหมาแมว โทนสีเดิม (พาสเทล) */
+            background-color: #fdfbfb;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.25' fill='%23D8B4E2'%3E%3Cpath d='M30 40C21.25 40 15 33.75 15 25C15 15 30 10 30 10C30 10 45 15 45 25C45 33.75 38.75 40 30 40Z'/%3E%3Ccircle cx='17.5' cy='17.5' r='5'/%3E%3Ccircle cx='25' cy='7.5' r='5'/%3E%3Ccircle cx='35' cy='7.5' r='5'/%3E%3Ccircle cx='42.5' cy='17.5' r='5'/%3E%3C/g%3E%3Cg opacity='0.25' fill='%23FFB6C1' transform='translate(60, 60)'%3E%3Cpath d='M30 40C21.25 40 15 33.75 15 25C15 15 30 10 30 10C30 10 45 15 45 25C45 33.75 38.75 40 30 40Z'/%3E%3Ccircle cx='17.5' cy='17.5' r='5'/%3E%3Ccircle cx='25' cy='7.5' r='5'/%3E%3Ccircle cx='35' cy='7.5' r='5'/%3E%3Ccircle cx='42.5' cy='17.5' r='5'/%3E%3C/g%3E%3C/svg%3E"),
+                linear-gradient(135deg, #fdfbfb 0%, #F3E8FF 100%);
+            background-size: 120px 120px, 100% 100%;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        /* ส่วนของกระดาษเนื้อหาหลัก */
+        .app-container {
+            width: 100%;
+            max-width: 600px; /* ขนาดสำหรับ Mobile ถึง Tablet ยืนพื้น */
+            background-color: var(--color-bg-paper);
+            /* สร้างลายตารางเหมือนกระดาษสมุดตามแบบร่าง */
+            background-image: 
+                linear-gradient(var(--color-grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--color-grid-line) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- Header Section --- */
+        header {
+            text-align: center;
+            padding: 30px 20px 15px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.4));
+        }
+
+        .logo-container {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 10px;
+            background-color: var(--color-pink-light);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(255, 182, 193, 0.3);
+            border: 2px solid #fff;
+        }
+
+        /* SVG แมวแทนรูปภาพเพื่อไม่ให้ต้องดึงจากภายนอก */
+        .logo-svg {
+            width: 60px;
+            height: 60px;
+            fill: #d2a679;
+        }
+
+        h1.store-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            /* ไล่สีตัวอักษร ม่วง-ชมพู */
+            background: linear-gradient(45deg, var(--color-purple-dark), var(--color-pink-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        .store-desc {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            background-color: var(--color-purple-light);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            padding: 0 15px 15px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--color-text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--color-pink-dark);
+        }
+
+        /* ไฮไลท์เมนูที่กำลังเลือกด้วยสีชมพูตามแบบ */
+        nav a.active {
+            background-color: var(--color-pink-light);
+            color: var(--color-pink-dark);
+            box-shadow: inset 0 -3px 0 var(--color-pink-main);
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 0 20px;
+        }
+
+        /* --- Announcement Section --- */
+        .announcement {
+            text-align: center;
+            padding: 20px 25px;
+        }
+
+        .announcement h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .announcement p {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .announcement p.small {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+        }
+
+        /* --- Categories (Tags) --- */
+        .categories-container {
+            padding: 0 20px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .cat-tag {
+            background-color: #fff;
+            border: 1px solid var(--color-purple-main);
+            color: var(--color-text-main);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .cat-tag:hover {
+            background-color: var(--color-blue-light);
+            border-color: var(--color-blue-main);
+        }
+
+        .cat-tag.active {
+            background-color: var(--color-pink-light);
+            border-color: var(--color-pink-main);
+            color: var(--color-pink-dark);
+            font-weight: 600;
+        }
+
+        /* --- Product Grid --- */
+        .product-grid {
+            padding: 0 20px 30px;
+            display: grid;
+            /* Mobile-first: 2 คอลัมน์ */
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        /* หากหน้าจอกว้างขึ้น (Tablet/Desktop) ปรับเป็น 3 หรือ 4 คอลัมน์ */
+        @media (min-width: 480px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 800px;
+            }
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* การ์ดสินค้า */
+        .product-card {
+            background-color: #fff;
+            /* กรอบด้านนอกของการ์ดแบบในรูป */
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(216, 180, 226, 0.4); /* เงาสีม่วงอ่อน */
+            border-color: var(--color-purple-main);
+        }
+
+        /* กรอบด้านในที่หุ้มรูป (จำลองตามแบบร่าง) */
+        .product-img-wrapper {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border: 1px solid #ccc;
+            padding: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* รูปภาพจำลองสินค้า (ใช้ CSS วาดกล่องสีเขียวแทน) */
+        .mock-product-img {
+            width: 100%;
+            height: 100%;
+            background-color: #4CAF50; /* สีเขียวเหมือนในรูป */
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.1);
+        }
+
+        .mock-product-img span:first-child {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        .mock-product-img span:last-child {
+            font-size: 0.5rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .product-title {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--color-text-main);
+            /* ตัดคำถ้ายาวเกิน */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .product-price {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #d32f2f; /* สีแดงสำหรับราคา */
+            align-self: flex-start;
+        }
+
+        /* --- How to Order Section --- */
+        .howto-container {
+            padding: 20px 30px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            margin: 10px 20px 30px;
+            border: 1px dashed var(--color-purple-main);
+        }
+        .howto-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--color-purple-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .howto-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .howto-list li {
+            margin-bottom: 15px;
+            padding-left: 38px;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .howto-list li::before {
+            content: counter(item);
+            counter-increment: item;
+            position: absolute;
+            left: 0;
+            top: -2px;
+            font-weight: 600;
+            color: var(--color-pink-dark);
+            background-color: var(--color-pink-light);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        .howto-list {
+            counter-reset: item;
+        }
+        
+        /* --- Details Section --- */
+        .details-subtitle {
+            font-size: 1.05rem;
+            color: var(--color-purple-dark);
+            margin: 15px 0 10px;
+            font-weight: 600;
+        }
+        .details-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+        .details-list li {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            color: var(--color-text-main);
+        }
+        .details-list li span {
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+        .details-divider {
+            border: none;
+            border-top: 2px dashed var(--color-pink-main);
+            margin: 20px 0;
+            opacity: 0.5;
+        }
+        .warning-box {
+            background-color: var(--color-pink-light);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--color-pink-dark);
+            border: 1px solid var(--color-pink-main);
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        /* --- New Cart & Admin Styles --- */
+        .add-to-cart-btn {
+            background-color: var(--color-purple-main);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-family: 'Mali', cursive;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+        .add-to-cart-btn:hover {
+            background-color: var(--color-purple-dark);
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px dashed var(--color-pink-main);
+        }
+        .cart-total {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 15px;
+            color: var(--color-purple-dark);
+        }
+        .action-btn {
+            background-color: var(--color-pink-dark);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-family: 'Mali', cursive;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            display: block;
+            text-align: center;
+        }
+        .admin-login {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .admin-login input {
+            padding: 8px 15px;
+            border-radius: 15px;
+            border: 1px solid var(--color-purple-main);
+            font-family: 'Mali', cursive;
+            text-align: center;
+        }
+        .order-card {
+            background: #fff;
+            border: 1px solid var(--color-purple-light);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* --- Payment & Notification Styles --- */
+        .payment-box {
+            background-color: var(--color-blue-light);
+            border: 1px dashed #80deea;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .payment-box p {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        .file-input-wrapper {
+            margin-top: 15px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--color-blue-main);
+        }
+        .file-input-wrapper input {
+            font-family: 'Mali', cursive;
+            font-size: 0.8rem;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        /* Utils */
+        .hidden {
+            display: none !important;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- ส่วนหัวเว็บ โลโก้ และ ชื่อร้าน -->
+        <header>
+            <div class="logo-container">
+                <!-- SVG รูปแมว น่ารักๆ แทนรูปภาพจริง -->
+                <svg class="logo-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/24/svg">
+                    <path d="M12,8L10.6,6.6C9.2,5.2 7,5.2 5.6,6.6C4.2,8 4.2,10.2 5.6,11.6L12,18L18.4,11.6C19.8,10.2 19.8,8 18.4,6.6C17,5.2 14.8,5.2 13.4,6.6L12,8Z" fill="#ffb6c1" opacity="0.5" transform="translate(0, 2) scale(0.8)" />
+                    <path d="M12 4.19C15.82 4.19 18.9 7.28 18.9 11.11C18.9 12.83 18.25 14.4 17.18 15.6L17.2 15.62C17.2 15.62 17.5 17.65 19 19.12C19.26 19.38 19.06 19.83 18.69 19.82C16.92 19.78 15.26 18.66 14.7 18.21C13.84 18.61 12.93 18.82 12 18.82C8.18 18.82 5.1 15.73 5.1 11.9C5.1 8.08 8.18 4.19 12 4.19M12 2C7.03 2 3 6.03 3 11.01C3 15.98 7.03 20.01 12 20.01C13.1 20.01 14.16 19.82 15.15 19.46C16.12 20.19 18.3 22 20.5 22C21.6 22 22 20.9 22 19.9C22 19.5 21.8 19.1 21.6 18.8C20.5 17.6 20.2 16.2 20.2 15.8C21.3 14.4 22 12.8 22 11.01C22 6.03 17.97 2 12 2M8.5 10C7.67 10 7 10.67 7 11.5C7 12.33 7.67 13 8.5 13C9.33 13 10 12.33 10 11.5C10 10.67 9.33 10 8.5 10M15.5 10C14.67 10 14 10.67 14 11.5C14 12.33 14.67 13 15.5 13C16.33 13 17 12.33 17 11.5C17 10.67 16.33 10 15.5 10Z"/>
+                </svg>
+            </div>
+            <h1 class="store-name">Enzo Store</h1>
+            <span class="store-desc">จำหน่ายเปียกแมวและของแมวๆ</span>
+        </header>
+
+        <!-- เมนูนำทาง -->
+        <nav>
+            <ul>
+                <li><a href="#" data-target="home">Home</a></li>
+                <li><a href="#" class="active" data-target="shop">ร้านค้า</a></li>
+                <li><a href="#" data-target="howto">วิธีการสั่งซื้อ</a></li>
+                <li><a href="#" data-target="details">รายละเอียดเพิ่มเติม</a></li>
+                <li><a href="#" data-target="cart">🛒 ตะกร้า <span id="cart-count">(0)</span></a></li>
+            </ul>
+        </nav>
+
+        <hr class="divider">
+
+        <div id="view-shop" class="view-section">
+            <!-- ข้อความต้อนรับ -->
+            <section class="announcement">
+                <h2>Enzo Store ยินดีต้อนรับค้าบ</h2>
+                <p>รบกวนลูกค้าดูใน open แชทก่อนนะคะว่าร้านเปิดรึเปล่า</p>
+                <p class="small">รบกวนลูกค้าทุกคนอ่านรายละเอียดเพิ่มเติม (กดด้านบนก่อนน้า) ถ้ามีค่าส่งโอนเพิ่มเองได้เลยค่ะ</p>
+            </section>
+
+        <!-- หมวดหมู่สินค้า -->
+        <section class="categories-container">
+            <button class="cat-tag active">ทั้งหมด</button>
+            <button class="cat-tag">สินค้าลดราคา</button>
+            <button class="cat-tag">เปียกจีน</button>
+            <button class="cat-tag">เปียกไทย</button>
+            <button class="cat-tag">ฟรีซดราย</button>
+            <button class="cat-tag">แมวเลีย</button>
+            <button class="cat-tag">ซุปแมว</button>
+            <button class="cat-tag">นมแพะ</button>
+            <button class="cat-tag">ทรายแมว</button>
+            <button class="cat-tag">ของใช้แมว</button>
+        </section>
+
+        <!-- ตารางสินค้า -->
+        <section class="product-grid" id="product-grid">
+            
+            <!-- ชิ้นที่ 1 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+            <!-- ชิ้นที่ 2 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+            <!-- ชิ้นที่ 3 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+            <!-- ชิ้นที่ 4 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+            <!-- ชิ้นที่ 5 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+            <!-- ชิ้นที่ 6 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+            <!-- ชิ้นที่ 7 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+            <!-- ชิ้นที่ 8 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+            <!-- ชิ้นที่ 9 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+            <!-- ชิ้นที่ 10 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+            <!-- ชิ้นที่ 11 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+            <!-- ชิ้นที่ 12 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <div class="mock-product-img"><span>R9</span><span>แมวเลีย</span></div>
+                </div>
+                <h3 class="product-title">R9 รสไก่ 60g</h3>
+                <span class="product-price">20฿</span>
+                <button class="add-to-cart-btn">🛒 ใส่ตะกร้า</button>
+            </div>
+
+        </section>
+        </div> <!-- ปิด view-shop -->
+
+        <!-- View: ตะกร้าสินค้า -->
+        <div id="view-cart" class="view-section hidden">
+            <section class="howto-container">
+                <h2 class="howto-title">🛒 ตะกร้าสินค้า</h2>
+                <div id="cart-items-container">
+                    <p style="text-align: center; color: var(--color-text-muted);">ยังไม่มีสินค้าในตะกร้า</p>
+                </div>
+                <div class="cart-total">
+                    รวม: <span id="cart-total-price">0</span> ฿
+                </div>
+
+                <!-- ช่องทางการชำระเงิน (จะแสดงเมื่อมีของในตะกร้า) -->
+                <div id="payment-section" class="payment-box hidden">
+                    <h3 class="details-subtitle" style="margin-top: 0;">💳 ช่องทางการชำระเงิน</h3>
+                    <p><strong>ธนาคาร:</strong> กสิกรไทย (KBank)</p>
+                    <p><strong>เลขบัญชี:</strong> 012-3-45678-9</p>
+                    <p><strong>ชื่อบัญชี:</strong> น.ส. แมวเหมียว ใจดี</p>
+                    <p><strong>พร้อมเพย์:</strong> 081-234-5678</p>
+                    <div class="file-input-wrapper">
+                        <label for="slip-upload" style="font-size: 0.85rem; color: var(--color-pink-dark); font-weight: bold;">* กรุณาแนบสลิปการโอนเงิน:</label>
+                        <input type="file" id="slip-upload" accept="image/*">
+                    </div>
+                </div>
+
+                <button class="action-btn" id="checkout-btn">✅ ยืนยันการสั่งซื้อ</button>
+            </section>
+        </div>
+
+        <!-- View: ระบบแม่ค้า -->
+        <div id="view-admin" class="view-section hidden">
+            <section class="howto-container">
+                <h2 class="howto-title">⚙️ ระบบแม่ค้า (หลังบ้าน)</h2>
+                
+                <div id="admin-login-view" class="admin-login">
+                    <p>กรุณาใส่รหัสผ่านเพื่อดูออเดอร์</p>
+                    <input type="password" id="admin-pwd" placeholder="รหัสผ่าน (ลองใส่ 1234)">
+                    <button class="action-btn" id="login-btn" style="width: auto;">เข้าสู่ระบบ</button>
+                </div>
+
+                <div id="admin-dashboard-view" class="hidden">
+                    <p style="margin-bottom: 15px; color: var(--color-pink-dark); font-weight: bold;">📦 ออเดอร์ล่าสุด</p>
+                    <div id="order-list">กำลังโหลด...</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- View: วิธีการสั่งซื้อ -->
+        <div id="view-howto" class="view-section hidden">
+            <section class="howto-container">
+                <h2 class="howto-title">🛒 วิธีการสั่งซื้อ</h2>
+                <ul class="howto-list">
+                    <li>อ่านรายละเอียดเพิ่มเติม</li>
+                    <li>เลือกสินค้าลงในตะกร้า</li>
+                    <li>ตรวจสอบออเดอร์</li>
+                    <li>ดูตรงรายละเอียด ว่าสถานที่ที่ให้จัดส่งมีค่าใช้จ่ายบวกเพิ่มมั้ย (ถ้ามีลูกค้าบวกเองได้เลยค่ะ)</li>
+                    <li>ชำระเงินผ่าน QR Code และแนบหลักฐาน</li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- View: Home และ รายละเอียด (เผื่ออนาคต) -->
+        <div id="view-home" class="view-section hidden">
+            <section class="announcement"><p>หน้าหลัก (Home) กำลังรอเพิ่มเนื้อหา...</p></section>
+        </div>
+        
+        <div id="view-details" class="view-section hidden">
+            <section class="howto-container">
+                <h2 class="howto-title">📝 รายละเอียดเพิ่มเติม</h2>
+                
+                <h3 class="details-subtitle">🛵 ค่าส่ง</h3>
+                <ul class="details-list">
+                    <li><span>✅</span> ส่งฟรีไม่มีขั้นต่ำ โฮมสวีท กรูฟวี่ อรุญกาจณณ์</li>
+                    <li><span>📍</span> คุณากร เดอะรูม ดิวัน เย็นสบาย สุขสบาย  บริบูรณ์ ทรีโอ้ สกายวิว แฮปปี้โอ้ แกรน เย็นไฮ (+5 เกิน60ส่งฟรี)</li>
+                    <li><span>📍</span> หอยู พรีเมียร์ คริสตัล อินดี๊ด PT (+5 เกิน100ส่งฟรี)</li>
+                    <li><span>📍</span> ดีคอนโด น็อตติง เคน  เดอะไทม์ บ้านพิมพ์บ้านเซน ฝั่งอารีน่า ชาโมนิก แชมเบอรี่ (+10 เกิน100ส่งฟรี)</li>
+                    <li><span>📍</span> อ่าวล่าง (+15 เกิน150ส่งฟรี)</li>
+                    <li><span>🤝</span> นัดรับพัทยาได้ค่ะ (ทักOAได้เลย)</li>
+                </ul>
+
+                <ul class="details-list" style="margin-top: 15px;">
+                    <li><span>🐈</span> ค่าส่งอาหารแมว (ค่าส่งตามจริงปัดขึ้น เช่น 38>40฿)</li>
+                    <li><span>🛍️</span> ค่าส่งของใช้ 50฿-60฿</li>
+                </ul>
+
+                <hr class="details-divider">
+
+                <div class="warning-box">
+                    <p>📸 <strong>ก่อนลูกค้าแกะถุง/พัสดุ รบกวนถ่ายคริปก่อนนะคะ</strong><br>หากสินค้ามีชำรุดเสียหาย นอกเหนือที่แจ้ง จะรับเคลมค้าบบ</p>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // สคริปต์สำหรับเปลี่ยนหน้าเมื่อคลิกเมนู
+        const navLinks = document.querySelectorAll('nav a');
+        const views = document.querySelectorAll('.view-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = this.getAttribute('data-target');
+                if(!target) return;
+
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                views.forEach(view => view.classList.add('hidden'));
+                
+                this.classList.add('active');
+                
+                const targetView = document.getElementById('view-' + target);
+                if (targetView) {
+                    targetView.classList.remove('hidden');
+                }
+            });
+        });
+
+        // --- ระบบซ่อนแม่ค้า (คลิกโลโก้ 5 ครั้ง) ---
+        let logoClickCount = 0;
+        let logoClickTimer;
+        document.querySelector('.logo-container').addEventListener('click', () => {
+            logoClickCount++;
+            clearTimeout(logoClickTimer);
+            logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 1500); // รีเซ็ตการนับถ้าหยุดคลิกเกิน 1.5 วินาที
+            
+            if (logoClickCount >= 5) {
+                // ซ่อนทุกหน้าและโชว์หน้าแอดมิน
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                views.forEach(view => view.classList.add('hidden'));
+                document.getElementById('view-admin').classList.remove('hidden');
+                logoClickCount = 0; // รีเซ็ตค่า
+            }
+        });
+
+        // --- ระบบสินค้า & ตะกร้า ---
+        let cart = [];
+
+        // จับเหตุการณ์กดปุ่มใส่ตะกร้า (อ่านข้อมูลจาก HTML ตรงๆ เพื่อให้แม่ค้าแก้โค้ดง่าย)
+        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = e.target.closest('.product-card');
+                const name = card.querySelector('.product-title').innerText;
+                const priceText = card.querySelector('.product-price').innerText;
+                const price = parseInt(priceText.replace('฿', '').trim());
+
+                cart.push({ name: name, price: price });
+                updateCartUI();
+                
+                const originalText = e.target.innerHTML;
+                e.target.innerHTML = "✅ เพิ่มแล้ว!";
+                e.target.style.backgroundColor = "var(--color-pink-dark)";
+                setTimeout(() => {
+                    e.target.innerHTML = originalText;
+                    e.target.style.backgroundColor = "";
+                }, 1000);
+            });
+        });
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = `(${cart.length})`;
+            const container = document.getElementById('cart-items-container');
+            const totalEl = document.getElementById('cart-total-price');
+            const paymentSection = document.getElementById('payment-section'); // ดึงกล่องชำระเงินมา
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--color-text-muted);">ยังไม่มีสินค้าในตะกร้า</p>';
+                totalEl.innerText = '0';
+                paymentSection.classList.add('hidden'); // ซ่อนถ้าตะกร้าว่าง
+                return;
+            }
+
+            paymentSection.classList.remove('hidden'); // แสดงถ้ามีของในตะกร้า
+            container.innerHTML = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `<span>${item.name}</span><span>${item.price} ฿ <span style="cursor:pointer; color:red; margin-left:10px;" data-remove="${index}">✖</span></span>`;
+                container.appendChild(div);
+            });
+            totalEl.innerText = total;
+
+            container.querySelectorAll('[data-remove]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = e.target.getAttribute('data-remove');
+                    cart.splice(idx, 1);
+                    updateCartUI();
+                });
+            });
+        }
+
+        // --- ระบบ Cloud Database (Firebase) ---
+        let db, auth, currentUser, appId;
+        const COLLECTION_NAME = "enzo_orders";
+        window.fallbackOrders = []; // เพิ่มตัวแปรสำหรับจำลองออเดอร์เมื่อไม่มีฐานข้อมูล
+        
+        try {
+            const firebaseConfig = JSON.parse(__firebase_config);
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+            const initAuth = async () => {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            };
+            initAuth();
+
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                if(user && document.getElementById('admin-dashboard-view').classList.contains('hidden') === false) {
+                    loadOrders();
+                }
+            });
+        } catch(e) {
+            console.error("Firebase init skipped/error: ", e);
+        }
+
+        // สั่งซื้อสินค้า
+        document.getElementById('checkout-btn').addEventListener('click', async () => {
+            if(cart.length === 0) return alert("ตะกร้าว่างเปล่าค่ะ");
+            
+            // เช็คว่าแนบสลิปหรือยัง
+            const slipInput = document.getElementById('slip-upload');
+            if(!slipInput.value) {
+                // แจ้งเตือนแบบ Popup ด้านบนเมื่อลืมแนบสลิป
+                const alertMsg = document.createElement('div');
+                alertMsg.style = "position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#ffcdd2; color:#c62828; padding:15px 20px; border-radius:10px; z-index:2000; box-shadow:0 4px 12px rgba(0,0,0,0.1); font-weight:bold;";
+                alertMsg.innerHTML = "⚠️ กรุณาแนบสลิปการโอนเงินก่อนยืนยันนะคะ";
+                document.body.appendChild(alertMsg);
+                setTimeout(() => alertMsg.remove(), 3000);
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            
+            if(db && currentUser) {
+                // กรณีมีฐานข้อมูลให้บันทึกลง Cloud
+                const orderData = {
+                    items: cart,
+                    total: total,
+                    timestamp: serverTimestamp(),
+                    status: "รอตรวจสอบยอดโอน"
+                };
+                try {
+                    const ordersRef = collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME);
+                    await addDoc(ordersRef, orderData);
+                } catch(error) {
+                    console.error("Error saving order: ", error);
+                }
+            } else {
+                // กรณีรันนอกระบบ (ไม่มีฐานข้อมูล) ให้จำลองเก็บไว้ในเครื่อง
+                window.fallbackOrders.push({
+                    id: "MEM" + Date.now().toString().slice(-5),
+                    items: [...cart],
+                    total: total,
+                    timestamp: { toMillis: () => Date.now() },
+                    status: "รอตรวจสอบยอดโอน (จำลอง)"
+                });
+            }
+                
+            // แจ้งเตือนสั่งซื้อสำเร็จแบบมี Overlay และเสียง (ถ้าเบราว์เซอร์อนุญาต)
+            try {
+                const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+                audio.play();
+            } catch(e) {} 
+
+                const msg = document.createElement('div');
+                msg.style = "position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:var(--color-pink-light); padding:30px; border:3px solid var(--color-pink-dark); border-radius:20px; z-index:1000; text-align:center; box-shadow:0 15px 40px rgba(0,0,0,0.3); width: 80%; max-width: 350px;";
+                msg.innerHTML = `
+                    <div style="font-size: 3rem; margin-bottom: 10px;">💖</div>
+                    <h3 style="color: var(--color-pink-dark); margin-bottom: 10px;">สั่งซื้อสำเร็จ!</h3>
+                    <p style='margin:10px 0; font-size: 0.95rem; color: var(--color-text-main);'>ออเดอร์และสลิปถูกส่งไปยังแม่ค้าเรียบร้อยแล้วค่ะ<br>ขอบคุณที่อุดหนุนนะคะ 😻</p>
+                    <button id='close-msg' class='action-btn' style='margin:15px auto 0; width: auto; padding: 8px 25px;'>ตกลง</button>
+                `;
+                
+                const overlay = document.createElement('div');
+                overlay.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999;";
+                document.body.appendChild(overlay);
+                document.body.appendChild(msg);
+                
+                document.getElementById('close-msg').onclick = () => {
+                    msg.remove();
+                    overlay.remove();
+                };
+
+                cart = [];
+                document.getElementById('slip-upload').value = ''; // เคลียร์ช่องสลิป
+                updateCartUI();
+                navLinks[1].click(); // กลับไปหน้าร้านค้า
+            } catch(error) {
+                console.error("Error saving order: ", error);
+            }
+        });
+
+        // ระบบล็อกอินแม่ค้า (จำลองรหัสผ่าน)
+        document.getElementById('login-btn').addEventListener('click', () => {
+            const pwd = document.getElementById('admin-pwd').value;
+            // *หมายเหตุ*: จำลองรหัสผ่านคือ 1234
+            if(pwd === "1234") {
+                document.getElementById('admin-login-view').classList.add('hidden');
+                document.getElementById('admin-dashboard-view').classList.remove('hidden');
+                loadOrders(); // โหลดออเดอร์เสมอ (ทั้งแบบจริงและจำลอง)
+            } else {
+                const err = document.createElement('p');
+                err.style.color = "red";
+                err.style.marginTop = "10px";
+                err.innerText = "รหัสผ่านไม่ถูกต้อง (ลองใช้ 1234)";
+                document.getElementById('admin-login-view').appendChild(err);
+                setTimeout(() => err.remove(), 2000);
+            }
+        });
+
+        // โหลดออเดอร์ให้แม่ค้าดู
+        let unsubscribeOrders = null;
+        function loadOrders() {
+            const list = document.getElementById('order-list');
+
+            // กรณีไม่มีฐานข้อมูล (รันนอกระบบ) ดึงจาก Memory แทน
+            if(!currentUser || !db) {
+                list.innerHTML = '';
+                if(window.fallbackOrders.length === 0) {
+                    list.innerHTML = '<p>ยังไม่มีออเดอร์</p>';
+                    return;
+                }
+                
+                let orders = [...window.fallbackOrders];
+                orders.sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis());
+                
+                orders.forEach(order => {
+                    const div = document.createElement('div');
+                    div.className = 'order-card';
+                    const itemCounts = {};
+                    order.items.forEach(i => itemCounts[i.name] = (itemCounts[i.name] || 0) + 1);
+                    const itemSummary = Object.entries(itemCounts).map(([name, count]) => `${name} (x${count})`).join(', ');
+
+                    div.innerHTML = `
+                        <strong>ออเดอร์ ID:</strong> ${order.id}<br>
+                        <strong>ยอดรวม:</strong> <span style="color:red;">${order.total} ฿</span><br>
+                        <strong>สถานะ:</strong> <span style="color:var(--color-pink-dark);">${order.status}</span><br>
+                        <hr style="border:none; border-top:1px dashed #ddd; margin:8px 0;">
+                        <strong>รายการ:</strong> ${itemSummary}
+                    `;
+                    list.appendChild(div);
+                });
+                return;
+            }
+
+            const ordersRef = collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME);
+            
+            if(unsubscribeOrders) unsubscribeOrders();
+            
+            unsubscribeOrders = onSnapshot(ordersRef, (snapshot) => {
+                list.innerHTML = '';
+                if(snapshot.empty) {
+                    list.innerHTML = '<p>ยังไม่มีออเดอร์</p>';
+                    return;
+                }
+
+                let orders = [];
+                snapshot.forEach(doc => {
+                    orders.push({ id: doc.id, ...doc.data() });
+                });
+                
+                orders.sort((a, b) => {
+                    const ta = a.timestamp?.toMillis() || 0;
+                    const tb = b.timestamp?.toMillis() || 0;
+                    return tb - ta;
+                });
+
+                orders.forEach(order => {
+                    const div = document.createElement('div');
+                    div.className = 'order-card';
+                    // สร้างสรุปรายการสินค้า เช่น "R9 รสไก่ 60g (x2)"
+                    const itemCounts = {};
+                    order.items.forEach(i => itemCounts[i.name] = (itemCounts[i.name] || 0) + 1);
+                    const itemSummary = Object.entries(itemCounts).map(([name, count]) => `${name} (x${count})`).join(', ');
+
+                    div.innerHTML = `
+                        <strong>ออเดอร์ ID:</strong> ${order.id.slice(0,6)}<br>
+                        <strong>ยอดรวม:</strong> <span style="color:red;">${order.total} ฿</span><br>
+                        <strong>สถานะ:</strong> <span style="color:var(--color-pink-dark);">${order.status}</span><br>
+                        <hr style="border:none; border-top:1px dashed #ddd; margin:8px 0;">
+                        <strong>รายการ:</strong> ${itemSummary}
+                    `;
+                    list.appendChild(div);
+                });
+            }, (error) => {
+                console.error("Listen failed: ", error);
+                document.getElementById('order-list').innerHTML = '<p style="color:red;">เกิดข้อผิดพลาดในการดึงข้อมูลออเดอร์</p>';
+            });
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+
